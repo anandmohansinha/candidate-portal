@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/material-dashboard-react/static/css/main.1a5f11bd.chunk.css",
+    "main.js": "/material-dashboard-react/static/js/main.c0a96e77.chunk.js",
+    "main.js.map": "/material-dashboard-react/static/js/main.c0a96e77.chunk.js.map",
+    "runtime~main.js": "/material-dashboard-react/static/js/runtime~main.5e191e20.js",
+    "runtime~main.js.map": "/material-dashboard-react/static/js/runtime~main.5e191e20.js.map",
+    "static/css/2.d0176e96.chunk.css": "/material-dashboard-react/static/css/2.d0176e96.chunk.css",
+    "static/js/2.4c28380c.chunk.js": "/material-dashboard-react/static/js/2.4c28380c.chunk.js",
+    "static/js/2.4c28380c.chunk.js.map": "/material-dashboard-react/static/js/2.4c28380c.chunk.js.map",
+    "index.html": "/material-dashboard-react/index.html",
+    "precache-manifest.48502531ddfdcad94cd14d5b89f621ca.js": "/material-dashboard-react/precache-manifest.48502531ddfdcad94cd14d5b89f621ca.js",
+    "service-worker.js": "/material-dashboard-react/service-worker.js",
+    "static/css/2.d0176e96.chunk.css.map": "/material-dashboard-react/static/css/2.d0176e96.chunk.css.map",
+    "static/css/main.1a5f11bd.chunk.css.map": "/material-dashboard-react/static/css/main.1a5f11bd.chunk.css.map",
+    "static/media/marc.jpg": "/material-dashboard-react/static/media/marc.8880a65c.jpg",
+    "static/media/sidebar-1.jpg": "/material-dashboard-react/static/media/sidebar-1.8e9f0a3c.jpg",
+    "static/media/sidebar-2.jpg": "/material-dashboard-react/static/media/sidebar-2.310509c9.jpg",
+    "static/media/sidebar-3.jpg": "/material-dashboard-react/static/media/sidebar-3.25031690.jpg",
+    "static/media/sidebar-4.jpg": "/material-dashboard-react/static/media/sidebar-4.fc9cb053.jpg"
+  }
+}
