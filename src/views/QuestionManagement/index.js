@@ -23,7 +23,6 @@ export default function QuestionManagement () {
     const[ preDisable, setPrevDisable] = React.useState(true);
 
     const next = (event) => {
-        debugger
         if(questions.length>0 && questions.length==count+1){
             setNextDisable(true);
         }
@@ -47,7 +46,6 @@ export default function QuestionManagement () {
 useEffect(()=>callApi(), []);
 
 const callApi=()=>{
-    debugger
     fetch('http://18.223.111.230:8080/assessment/3?emailId=KUMAR.ABHISHEK1@synechron.com', {
         method:'GET',
         headers:{
@@ -65,7 +63,6 @@ const callApi=()=>{
 }
 
 if(questions.length == 0 || questions[selectedIndex]=='undefined'){
-    debugger
     return "";
 }
     return (
