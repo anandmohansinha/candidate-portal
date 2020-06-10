@@ -70,11 +70,11 @@ export default function TableList() {
   const prepareData = (res)=>{
     let candidates = res.candidates;
     candidates.forEach(function (candidates, index) {
-      const {firstName, emailAddress, inviteDate, attemptedDate, attempted, name} = candidates;
-        if(attempted === true){
-          AttemptedtableData.push([firstName, emailAddress, inviteDate, attemptedDate]);
+      const {firstName, emailAddress, inviteDate, attemptedDate, status, name, percentage} = candidates;
+        if(status === true){
+          AttemptedtableData.push([firstName, emailAddress,name,percentage, inviteDate, attemptedDate]);
         } else {
-          unAttemptedtableData.push([firstName, emailAddress, name, attemptedDate]);
+          unAttemptedtableData.push([firstName, emailAddress, name, inviteDate]);
         }
        
     });
@@ -99,7 +99,7 @@ export default function TableList() {
           
             <Table
               tableHeaderColor="primary"
-              tableHead={["Name", "Email","Invite Date", "Attempted Date"]}
+              tableHead={["Name", "Email", "Domain" ,"Percentage" ,"Invite Date", "Attempted Date"]}
               tableData={AttemptedtableData}
             />
           </CardBody>
