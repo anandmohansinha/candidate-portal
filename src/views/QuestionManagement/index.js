@@ -163,7 +163,6 @@ if(questions.length == 0 || questions[selectedIndex]=='undefined'){
                         variant="contained"
                         color="secondary"
                         size="large"
-                        disabled={nextDisable}
                         onClick={()=>submit()}
                     >
                         submit
