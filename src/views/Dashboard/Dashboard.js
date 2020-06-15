@@ -28,7 +28,6 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import javaLogo from "../../assets/img/java.jpg";
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -42,11 +41,11 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 const useStyles = makeStyles(styles);
 
-export const JavaLogo = () => (
-  <Icon>
-      <img src={javaLogo} height={50} width={50}/>
-  </Icon>
-)
+// export const JavaLogo = () => (
+//   <Icon>
+//       <img src={javaLogo} height={50} width={50}/>
+//   </Icon>
+// )
 
 export default function Dashboard() {
   const[subjectCount, setSubjectCount]= React.useState([]);
@@ -76,7 +75,7 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
-                <JavaLogo></JavaLogo>
+              <Icon>content_copy</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>{subjectCount[2].assessmentName}</p>
               <h3 className={classes.cardTitle}>
