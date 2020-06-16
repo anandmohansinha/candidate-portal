@@ -43,7 +43,7 @@ export default function TableList() {
  
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
-  const url = "http://18.191.46.80:8080/candidateDetails";
+  const url = "http://52.14.195.214:8080/candidateDetails";
   const [AttemptedtableData, setAttemptedtableData] = useState([]);
   const [unAttemptedtableData, setUnAttemptedtableData] = useState([]);
   

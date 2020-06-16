@@ -43,7 +43,7 @@ export default function QuestionManagement (props) {
         setSelectedIndex(selectedIndex-1); 
     };
     const submit = ()=>{
-        fetch('http://18.191.46.80:8080/submitAssessment?emailId='+email, {
+        fetch('http://52.14.195.214:8080/submitAssessment?emailId='+email, {
         method:'POST',
         headers:{
           'Accept':'application/json',
@@ -72,7 +72,7 @@ export default function QuestionManagement (props) {
 useEffect(()=>callApi(), []);
 
 const callApi=()=>{
-    fetch('http://18.191.46.80:8080/assessment/'+props.history.location.search, {
+    fetch('http://52.14.195.214:8080/assessment/'+props.history.location.search, {
         method:'GET',
         headers:{
           'Accept':'application/json',
