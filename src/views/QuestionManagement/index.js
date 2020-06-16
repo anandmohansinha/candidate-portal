@@ -43,7 +43,7 @@ export default function QuestionManagement (props) {
         setSelectedIndex(selectedIndex-1); 
     };
     const submit = ()=>{
-        fetch('http://18.223.111.230:8080/submitAssessment?emailId='+email, {
+        fetch('http://18.191.46.80:8080/submitAssessment?emailId='+email, {
         method:'POST',
         headers:{
           'Accept':'application/json',
@@ -72,9 +72,7 @@ export default function QuestionManagement (props) {
 useEffect(()=>callApi(), []);
 
 const callApi=()=>{
-    //3?emailId=KUMAR.ABHISHEK1@synechron.com
-    debugger
-    fetch('http://18.223.111.230:8080/assessment/'+props.history.location.search, {
+    fetch('http://18.191.46.80:8080/assessment/'+props.history.location.search, {
         method:'GET',
         headers:{
           'Accept':'application/json',
@@ -83,7 +81,6 @@ const callApi=()=>{
         }
       }).then((res)=>res.json())
         .then((res) =>{
-            debugger
             setQuestions(res.assessments.questions);
             setTechnology(res.assessments.technology);
             setEmail(res.candidate.emailAddress);
@@ -92,7 +89,6 @@ const callApi=()=>{
 }
 
 const radioButtonContent = ()=>{
-    debugger
     return(
         questions[selectedIndex].options.map((option,index) =>(
             <FormControlLabel value={option.id} control={<Radio />} label={option.description} />

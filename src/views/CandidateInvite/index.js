@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InviteCandidate() {
-  const url = "http://18.223.111.230:8080/registerCandidateScheduleAssessment";
+  const url = "http://18.191.46.80:8080/registerCandidateScheduleAssessment";
   const classes = useStyles();
   const[email, setEmail] = React.useState('');
   const[name, setName] = React.useState('');

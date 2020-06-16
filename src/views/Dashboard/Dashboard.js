@@ -53,7 +53,7 @@ export default function Dashboard() {
   useEffect(()=>callApi(), []);
 
   const callApi=()=>{
-    fetch('http://18.223.111.230:8080/candidateAssessmentCount', {
+    fetch('http://18.191.46.80:8080/candidateAssessmentCount', {
         method:'GET',
         headers:{
           'Accept':'application/json',

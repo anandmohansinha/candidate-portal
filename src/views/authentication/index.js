@@ -57,7 +57,7 @@ import Container from '@material-ui/core/Container';
     const handleLogin = ()=>{
       if(email==='anand@gmail.com' && password==='password'){
         setError(false);
-        const url = `http://18.223.111.230:8080/valdiateLogin?loginId=`+email+`&password=`+password;
+        const url = `http://18.191.46.80:8080/valdiateLogin?loginId=`+email+`&password=`+password;
         fetch(url, {
           method:'GET',
           headers:{

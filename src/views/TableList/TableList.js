@@ -43,7 +43,7 @@ export default function TableList() {
  
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
-  const url = "http://18.223.111.230:8080/candidateDetails";
+  const url = "http://18.191.46.80:8080/candidateDetails";
   const [AttemptedtableData, setAttemptedtableData] = useState([]);
   const [unAttemptedtableData, setUnAttemptedtableData] = useState([]);
   
@@ -61,7 +61,6 @@ export default function TableList() {
       }
     }).then((res)=>res.json())
       .then((res) =>{
-        debugger
         prepareData(res);
         setIsLoading(false);
       })
@@ -81,7 +80,6 @@ export default function TableList() {
   }
  
   if(AttemptedtableData.length === 0 && unAttemptedtableData ===0){
-    debugger
     return null;
   }
   
