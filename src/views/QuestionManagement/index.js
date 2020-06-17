@@ -81,7 +81,7 @@ const callApi=()=>{
         }
       }).then((res)=>res.json())
         .then((res) =>{
-            if(res.dataAvailable != false) {
+            if(res.dataAvailable) {
                 setQuestions(res.assessments.questions);
                 setTechnology(res.assessments.technology);
                 setEmail(res.candidate.emailAddress);
@@ -104,7 +104,8 @@ if(questions.length == 0 || questions[selectedIndex]=='undefined'){
 }
     return (
        <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
+         {  questions.length<0 && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
+         {  questions.length>0 &&  <GridItem xs={12} sm={12} md={12}>
                 <Card>
                     <CardHeader color="primary">
                         <Typography variant="h6">
@@ -168,7 +169,7 @@ if(questions.length == 0 || questions[selectedIndex]=='undefined'){
                         submit
                   </Button>
                 </div>
-            </GridItem>
-        </GridContainer>
+                            </GridItem> }
+                            </GridContainer>
     )
 };
