@@ -81,10 +81,12 @@ const callApi=()=>{
         }
       }).then((res)=>res.json())
         .then((res) =>{
-            setQuestions(res.assessments.questions);
-            setTechnology(res.assessments.technology);
-            setEmail(res.candidate.emailAddress);
-            setAnswer({"assessmentId": res.assessments.id,"questionAnswerReq": []});
+            if(res.dataAvailable != false) {
+                setQuestions(res.assessments.questions);
+                setTechnology(res.assessments.technology);
+                setEmail(res.candidate.emailAddress);
+                setAnswer({"assessmentId": res.assessments.id, "questionAnswerReq": []});
+            }
         })
 }
 
