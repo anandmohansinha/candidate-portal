@@ -135,6 +135,7 @@ if(questions.length == 0 || questions[selectedIndex]=='undefined'){
                 </Card>
                 <div>
                     <Button
+                        mr={5}
                         type="button"
                         variant="contained"
                         color="secondary"
@@ -145,6 +146,7 @@ if(questions.length == 0 || questions[selectedIndex]=='undefined'){
                         Prev
                   </Button>
                   <Button
+                       mr={5}
                         type="button"
                         variant="contained"
                         color="secondary"
