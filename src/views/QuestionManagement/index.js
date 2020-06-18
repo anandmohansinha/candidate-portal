@@ -113,8 +113,6 @@ const radioButtonContent = ()=>{
 // }
     return (
         <div>
-     <Alert severity="warning">This is a warning alert — check it out!</Alert>
-      <Alert severity="info">This is an info alert — check it out!</Alert>
         {!isTestSubmitted && isDataLoaded && !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
         { isTestSubmitted &&  <label>Your test has been submitted sucsessfully.We wish you good luck.If you are shortlisted our recruiter team will get in touch with you.Thanks.</label>}
         {!isTestSubmitted &&  questions.length &&   <GridContainer>
