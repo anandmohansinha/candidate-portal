@@ -21,6 +21,7 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from './views/authentication'
 import Assessment from './views/Assessment'
+import CandidateRegisterForAssessment from './views/CandidateRegisterForAssessment'
 // core components
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
@@ -34,7 +35,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/assessment" component={Assessment}/>
       <Route path="/admin" component={Admin} />
-      <Route path="/userRegister" component={Assessment}/>
+      <Route path="/CandidateRegisterForAssessment" component={CandidateRegisterForAssessment}/>
       {/* <Route path="/rtl" component={RTL} /> */}
       {/* <Redirect from="/" to="/admin/dashboard" /> */}
       <Route path="/" component={Login}/>
