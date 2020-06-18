@@ -99,13 +99,15 @@ const radioButtonContent = ()=>{
     )
 }
 
-if(questions.length == 0 || questions[selectedIndex]=='undefined'){
-    return "";
-}
+// if(questions.length == 0 || questions[selectedIndex]=='undefined'){
+//     return "";
+// }
     return (
-       <GridContainer>
-         {  questions.length<0 && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
-         {  questions.length>0 &&  <GridItem xs={12} sm={12} md={12}>
+        <div>
+        {  !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
+       
+        {  questions.length &&   <GridContainer>
+       <GridItem xs={12} sm={12} md={12}>
                 <Card>
                     <CardHeader color="primary">
                         <Typography variant="h6">
@@ -169,7 +171,7 @@ if(questions.length == 0 || questions[selectedIndex]=='undefined'){
                         submit
                   </Button>
                 </div>
-                            </GridItem> }
-                            </GridContainer>
-    )
+                            </GridItem> 
+                            </GridContainer>}
+   </div> )
 };
