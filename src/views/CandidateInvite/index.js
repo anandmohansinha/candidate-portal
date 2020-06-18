@@ -17,6 +17,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import endPoint from '../../variables/app.url'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InviteCandidate() {
-  const url = "http://52.14.195.214:8080/registerCandidateScheduleAssessment";
+  const url = `${endPoint.serviceEndPoint}registerCandidateScheduleAssessment`;
   const classes = useStyles();
   const[email, setEmail] = React.useState('');
   const[name, setName] = React.useState('');

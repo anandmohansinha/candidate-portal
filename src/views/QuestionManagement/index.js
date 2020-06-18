@@ -13,6 +13,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import endPoint from '../../variables/app.url'
 
 export default function QuestionManagement (props) {
     const [questions, setQuestions] = React.useState([]);
@@ -47,7 +48,7 @@ export default function QuestionManagement (props) {
         setSelectedIndex(selectedIndex-1); 
     };
     const submit = ()=>{
-        fetch('http://52.14.195.214:8080/submitAssessment?emailId='+email, {
+        fetch(`${endPoint.serviceEndPoint}submitAssessment?emailId=`+email, {
         method:'POST',
         headers:{
           'Accept':'application/json',
@@ -80,7 +81,7 @@ export default function QuestionManagement (props) {
 useEffect(()=>callApi(), []);
 
 const callApi=()=>{
-    fetch('http://52.14.195.214:8080/assessment/'+props.history.location.search, {
+    fetch(`${endPoint.serviceEndPoint}assessment/`+props.history.location.search, {
         method:'GET',
         headers:{
           'Accept':'application/json',

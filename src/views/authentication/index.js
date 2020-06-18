@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import endPoint from '../../variables/app.url'
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -57,7 +57,7 @@ import Container from '@material-ui/core/Container';
     const handleLogin = ()=>{
       if(email==='anand@gmail.com' && password==='password'){
         setError(false);
-        const url = `http://52.14.195.214:8080/valdiateLogin?loginId=`+email+`&password=`+password;
+        const url = `${endPoint.serviceEndPoint}valdiateLogin?loginId=`+email+`&password=`+password;
         fetch(url, {
           method:'GET',
           headers:{

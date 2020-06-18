@@ -34,6 +34,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/assessment" component={Assessment}/>
       <Route path="/admin" component={Admin} />
+      <Route path="/userRegister" component={Assessment}/>
       {/* <Route path="/rtl" component={RTL} /> */}
       {/* <Redirect from="/" to="/admin/dashboard" /> */}
       <Route path="/" component={Login}/>

@@ -38,6 +38,7 @@ import {
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+import endPoint from '../../variables/app.url'
 
 const useStyles = makeStyles(styles);
 
@@ -53,7 +54,7 @@ export default function Dashboard() {
   useEffect(()=>callApi(), []);
 
   const callApi=()=>{
-    fetch('http://52.14.195.214:8080/candidateAssessmentCount', {
+    fetch(`${endPoint.serviceEndPoint}candidateAssessmentCount`, {
         method:'GET',
         headers:{
           'Accept':'application/json',
