@@ -25,6 +25,9 @@ export default function QuestionManagement (props) {
     const [value, setValue] = React.useState('');
     const[answers, setAnswer] = React.useState({});
     const[email, setEmail]= React.useState();
+    let styleButtons     = {
+        marginLeft: '5px',
+      };
 
     const next = (event) => {
         if(questions.length>0 && questions.length==count+1){
@@ -140,7 +143,7 @@ const radioButtonContent = ()=>{
                 </Card>
                 <div>
                     <Button
-                        mr={5}
+                       style={styleButtons}
                         type="button"
                         variant="contained"
                         color="secondary"
@@ -151,7 +154,7 @@ const radioButtonContent = ()=>{
                         Prev
                   </Button>
                   <Button
-                       mr={5}
+                      style={styleButtons}
                         type="button"
                         variant="contained"
                         color="secondary"
