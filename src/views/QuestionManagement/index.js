@@ -26,7 +26,7 @@ export default function QuestionManagement (props) {
     const[answers, setAnswer] = React.useState({});
     const[email, setEmail]= React.useState();
     let styleButtons     = {
-        marginLeft: '5px',
+        marginRight: '5px',
       };
 
     const next = (event) => {
@@ -56,6 +56,7 @@ export default function QuestionManagement (props) {
         body: JSON.stringify(answers)
       }).then((res)=>res.json())
         .then((res) =>{
+            console.log("submitAssessment",res)
             
         })
     }
@@ -107,6 +108,7 @@ const radioButtonContent = ()=>{
 // }
     return (
         <div>
+  
         {  !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
        
         {  questions.length &&   <GridContainer>
@@ -178,3 +180,7 @@ const radioButtonContent = ()=>{
                             </GridContainer>}
    </div> )
 };
+
+
+
+
