@@ -13,7 +13,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { makeStyles } from '@material-ui/core/styles';
 
 export default function QuestionManagement (props) {
     const [questions, setQuestions] = React.useState([]);
@@ -25,6 +24,8 @@ export default function QuestionManagement (props) {
     const [value, setValue] = React.useState('');
     const[answers, setAnswer] = React.useState({});
     const[email, setEmail]= React.useState();
+    const [isDataLoaded, setisDataLoaded] = React.useState(false);
+    const [isTestSubmitted, setIsTestSubmitted] = React.useState(false);
     let styleButtons     = {
         marginRight: '5px',
       };
@@ -56,7 +57,10 @@ export default function QuestionManagement (props) {
         body: JSON.stringify(answers)
       }).then((res)=>res.json())
         .then((res) =>{
-            console.log("submitAssessment",res)
+            console.log("submitAssessment",res);
+            if(res.dataSubmited){
+                setIsTestSubmitted(true);
+            }
             
         })
     }
@@ -91,6 +95,7 @@ const callApi=()=>{
                 setEmail(res.candidate.emailAddress);
                 setAnswer({"assessmentId": res.assessments.id, "questionAnswerReq": []});
             }
+            setisDataLoaded(true)
         })
 }
 
@@ -108,10 +113,11 @@ const radioButtonContent = ()=>{
 // }
     return (
         <div>
-  
-        {  !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
-       
-        {  questions.length &&   <GridContainer>
+     <Alert severity="warning">This is a warning alert — check it out!</Alert>
+      <Alert severity="info">This is an info alert — check it out!</Alert>
+        {!isTestSubmitted && isDataLoaded && !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
+        { isTestSubmitted &&  <label>Your test has been submitted sucsessfully.We wish you good luck.If you are shortlisted our recruiter team will get in touch with you.Thanks.</label>}
+        {!isTestSubmitted &&  questions.length &&   <GridContainer>
        <GridItem xs={12} sm={12} md={12}>
                 <Card>
                     <CardHeader color="primary">
