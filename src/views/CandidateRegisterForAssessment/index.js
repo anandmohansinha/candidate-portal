@@ -62,7 +62,7 @@ const handleRegisterCandidate = ()=>{
     "mobileNo": mobile
     }
 
-    console.log("Hello sir",reqObj);
+    console.log("request Object",reqObj);
     fetch(endPoint.serviceEndPoint, {
       method:'POST',
       headers:{
