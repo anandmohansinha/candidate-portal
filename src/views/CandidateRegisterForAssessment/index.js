@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState}from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -12,6 +12,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import endPoint from '../../variables/app.url'
 
 import avatar from "assets/img/faces/marc.jpg";
 
@@ -36,38 +37,97 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
+
+
+
+
 export default function CandidateRegisterForAssessment() {
   const classes = useStyles();
+  const [email, setEmail] = useState('pravinmhaske997@gmail.com');
+const [firstName, setfirstName] = useState('pravin');
+const [lastName, setlastName] = useState('mhaske');
+const [countryCode, setcountryCode] = useState('+91');
+const [dob, setdob] = useState('06-sept-1990');
+const [mobile, setMobile] = useState('9623044643');
+
+const handleRegisterCandidate = ()=>{
+
+
+  let reqObj={
+    firstName,
+    "emailAddress":email,
+    lastName,
+    countryCode,
+    "dateOfBirth": dob,
+    "mobileNo": mobile
+    }
+
+    console.log("Hello sir",reqObj);
+    fetch(endPoint.serviceEndPoint, {
+      method:'POST',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
+      },
+      body: JSON.stringify(reqObj)
+    }).then((res)=>res.json())
+      .then((res) =>{
+      
+     console.log("Sucessful invitation ",res)
+      })
+  // if(email==='anand@gmail.com' && password==='password'){
+  //   setError(false);
+  //   const url = `${endPoint.serviceEndPoint}valdiateLogin?loginId=`+email+`&password=`+password;
+  //   fetch(url, {
+  //     method:'GET',
+  //     headers:{
+  //       'Accept':'application/json',
+  //       'Content-Type':'application/json',
+  //       'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
+  //     }
+  //   }).then((res)=>res.json())
+  //     .then(() =>{
+  //       history.push('/admin/invite-candidate')
+  //     })
+  // }else{
+  //   setError(true);
+  //   setHelperText('Incorrect username or password');
+  // }
+}; 
+
   return (
-    <div>
-      <GridContainer>
+    <div style={{margin: "0 20px"}}>
+      <GridContainer >
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
+              <h4 className={classes.cardTitleWhite}>Candidate Profile</h4>
               <p className={classes.cardCategoryWhite}>Complete your profile</p>
             </CardHeader>
             <CardBody>
+            
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
+                <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Company (disabled)"
-                    id="company-disabled"
+                    labelText="First Name"
+                    id="first-name"
                     formControlProps={{
                       fullWidth: true
                     }}
-                    inputProps={{
-                      disabled: true
-                    }}
+
+                    inputProps={{onChange:(e)=>setfirstName(e.target.value)}}
+                    
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
+                <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Username"
-                    id="username"
+                    labelText="Last Name"
+                    id="last-name"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{onChange:(e)=>setlastName(e.target.value)}}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -77,34 +137,25 @@ export default function CandidateRegisterForAssessment() {
                     formControlProps={{
                       fullWidth: true
                     }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
+                    inputProps={{onChange:(e)=>setEmail(e.target.value)}}
                   />
                 </GridItem>
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="City"
-                    id="city"
+                    labelText="Mobile Number"
+                    id="obile"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    onChange={(e)=>setMobile(e.target.value)}
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={4}>
+                  <CustomInput
+                    labelText="Country Code"
+                    id="country-code"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -112,42 +163,21 @@ export default function CandidateRegisterForAssessment() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Country"
-                    id="country"
+                    labelText="Date Of Birth"
+                    id="dob"
                     formControlProps={{
                       fullWidth: true
                     }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
+                    inputProps={{onChange:(e)=>setdob(e.target.value)}}
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
+            
             </CardBody>
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
+              <Button  color="primary"
+               onClick={handleRegisterCandidate}
+              >Register Candidate</Button>
             </CardFooter>
           </Card>
         </GridItem>
