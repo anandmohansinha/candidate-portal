@@ -7,6 +7,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from '@material-ui/core/Button';
+import endPoint from "../../variables/app.url";
 
 const styles = {
   cardCategoryWhite: {
@@ -43,7 +44,8 @@ export default function TableList() {
  
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
-  const url = "http://52.14.195.214:8080/candidateDetails";
+  const url = `${endPoint.serviceEndPoint}candidateDetails`;
+
   const [AttemptedtableData, setAttemptedtableData] = useState([]);
   const [unAttemptedtableData, setUnAttemptedtableData] = useState([]);
   
