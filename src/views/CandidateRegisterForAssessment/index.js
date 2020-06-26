@@ -17,6 +17,10 @@ import style from './style.module.css';
 
 import avatar from "assets/img/faces/marc.jpg";
 
+//AD
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
+
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -95,20 +99,32 @@ function ShowInstructions(props) {
 }
 
 function RegisterForAssessment() {
+
+  //AD
+  
+  let urlLoc = window.location.href;
+  var query = window.location.search.substring(1);
+  var vars = query.split("&")[0].split("=");
+  //console.log("URL Location ",urlLoc);
+
+  let emailId = vars[1];
+  console.log("Email",emailId);
+
   const classes = useStyles();
-  const [email, setEmail] = useState('pravinmhaske997@gmail.com');
+  const [email, setEmail] = useState(emailId);
   const [firstName, setfirstName] = useState('pravin');
   const [lastName, setlastName] = useState('mhaske');
   const [countryCode, setcountryCode] = useState('+91');
   const [dob, setdob] = useState('06-sept-1990');
   const [mobile, setMobile] = useState('9623044643');
 
+  
   const handleRegisterCandidate = () => {
 
-
-    let reqObj = {
+   let reqObj = {
       firstName,
-      "emailAddress": email,
+      //"emailAddress": email,
+      "emailAddress": emailId,
       lastName,
       countryCode,
       "dateOfBirth": dob,
@@ -116,7 +132,15 @@ function RegisterForAssessment() {
     }
 
     console.log("request Object", reqObj);
-    fetch(endPoint.serviceEndPoint, {
+    
+
+    //AD - redirecting to, will move to success event 
+    //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+reqObj.emailAddress+'&assessmentId=1'
+    //console.log(endPoint.serviceEndPoint);
+
+    //http://3.15.175.168:8080/registerCandidate
+
+    fetch(endPoint.serviceEndPoint+"/registerCandidate", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -128,7 +152,11 @@ function RegisterForAssessment() {
       .then((res) => {
 
         console.log("Sucessful invitation ", res)
+        window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+reqObj.emailAddress+'&assessmentId=1'
+
       })
+
+
     // if(email==='anand@gmail.com' && password==='password'){
     //   setError(false);
     //   const url = `${endPoint.serviceEndPoint}valdiateLogin?loginId=`+email+`&password=`+password;
@@ -185,12 +213,16 @@ function RegisterForAssessment() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Email address"
+                    labelText={emailId}
                     id="email-address"
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: false,
+                      disabled:true,
+                      
                     }}
-                    inputProps={{ onChange: (e) => setEmail(e.target.value) }}
+                   
+                    //inputProps={{ onChange: (e) => setEmail(e.target.value) }}
+                    inputProps={{ onChange: (e) => setEmail(emailId) }}
                   />
                 </GridItem>
               </GridContainer>
@@ -199,9 +231,11 @@ function RegisterForAssessment() {
                   <CustomInput
                     labelText="Mobile Number"
                     id="obile"
+                    type="number"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    
                     onChange={(e) => setMobile(e.target.value)}
                   />
                 </GridItem>
@@ -216,7 +250,7 @@ function RegisterForAssessment() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Date Of Birth"
+                    labelText="Date Of Birth : mm/dd/yyyy"
                     id="dob"
                     formControlProps={{
                       fullWidth: true
@@ -240,6 +274,10 @@ function RegisterForAssessment() {
 }
 
 class CandidateRegisterForAssessment extends Component {
+ 
+ 
+  emailfromUrl = ''; //AD
+
   constructor(props) {
     super(props);
     this.showInstructions = this.showInstructions.bind(this);
@@ -260,9 +298,14 @@ class CandidateRegisterForAssessment extends Component {
         <ShowInstructions onClick={this.showInstructions} />
       );
     } else {
-      console.log("in else")
+      console.log("in else");
+
+      //AD: 
+      //this.emailfromUrl = new URLSearchParams(this.props.location.search).get("emailId");
+      //console.log(this.emailfromUrl);
+           
       return (
-        <RegisterForAssessment />
+        <RegisterForAssessment/>
       );
     }
   }
