@@ -71,6 +71,11 @@ const tableStyle = theme => ({
     display: "table-row",
     outline: "none",
     verticalAlign: "middle"
+  },
+  tablePagination: {
+    "& div": {
+      float: "left"
+    }
   }
 });
 

@@ -7,14 +7,29 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 // core components
 import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
+
+import TablePaginationActions from './TablePaginationActions';
 
 const useStyles = makeStyles(styles);
 
 export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor } = props;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -35,9 +50,11 @@ export default function CustomTable(props) {
           </TableHead>
         ) : null}
         <TableBody>
-          {tableData.map((prop, key) => {
-            return (
-              <TableRow key={key} className={classes.tableBodyRow}>
+          {(rowsPerPage > 0
+            ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : tableData
+          ).map((prop, key) => (
+            <TableRow key={key} className={classes.tableBodyRow}>
                 {prop.map((prop, key) => {
                   return (
                     <TableCell className={classes.tableCell} key={key}>
@@ -46,9 +63,27 @@ export default function CustomTable(props) {
                   );
                 })}
               </TableRow>
-            );
-          })}
+          ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              className={classes.tablePagination}
+              rowsPerPageOptions={[5, 10, 25, 100]}
+              colSpan={3}
+              count={tableData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: { 'aria-label': 'rows per page' },
+                native: true,
+              }}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </div>
   );
