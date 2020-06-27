@@ -127,7 +127,7 @@ const callApi=()=>{
         <div>
             {!isTestSubmitted && isDataLoaded && !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
             {isTestSubmitted && <label>Your test has been submitted sucsessfully.We wish you good luck.If you are shortlisted our recruiter team will get in touch with you.Thanks.</label>}
-            {!isTestSubmitted && questions.length && <GridContainer>
+            {!isTestSubmitted && questions.length > 0 && <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
