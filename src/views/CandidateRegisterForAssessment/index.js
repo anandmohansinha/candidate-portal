@@ -112,11 +112,11 @@ function RegisterForAssessment() {
 
   const classes = useStyles();
   const [email, setEmail] = useState(emailId);
-  const [firstName, setfirstName] = useState('pravin');
-  const [lastName, setlastName] = useState('mhaske');
-  const [countryCode, setcountryCode] = useState('+91');
-  const [dob, setdob] = useState('06-sept-1990');
-  const [mobile, setMobile] = useState('9623044643');
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [countryCode, setcountryCode] = useState('');
+  const [dob, setdob] = useState('');
+  const [mobile, setMobile] = useState('');
 
   
   const handleRegisterCandidate = () => {
@@ -220,7 +220,6 @@ function RegisterForAssessment() {
                       disabled:true,
                       
                     }}
-                   
                     //inputProps={{ onChange: (e) => setEmail(e.target.value) }}
                     inputProps={{ onChange: (e) => setEmail(emailId) }}
                   />
@@ -235,8 +234,7 @@ function RegisterForAssessment() {
                     formControlProps={{
                       fullWidth: true
                     }}
-                    
-                    onChange={(e) => setMobile(e.target.value)}
+                    inputProps={{ onChange: (e) => setMobile(e.target.value) }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -246,6 +244,7 @@ function RegisterForAssessment() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{ onChange: (e) => setcountryCode(e.target.value) }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
