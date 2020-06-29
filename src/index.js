@@ -1,161 +1,45 @@
-import React,{Component, useEffect, useState} from 'react';
-import { useHistory } from "react-router-dom";
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import endPoint from '../../variables/app.url'
-  const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.primary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
-  
-  function validateUserDetails(){
-    alert(1)
-  }
-  export default function Login() {
-   
-    const classes = useStyles();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [error, setError] = useState(false);
-    const [helperText, setHelperText] = useState('');
-    let history = useHistory();
-    useEffect(()=>{
-      if(email.trim() && password.trim()){
-        setIsButtonDisabled(false);
-      }else{
-        setIsButtonDisabled(true);
-      }
-    }, [email,password ]);
+/*!
 
-    const handleLogin = ()=>{
-    
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)&&(/^[A-Za-z]\w{7,14}$/).test(password))
-  {
+=========================================================
+* Material Dashboard React - v1.8.0
+=========================================================
 
-        setError(false);
-        const url = `${endPoint.serviceEndPoint}valdiateLogin?loginId=`+email+`&password=`+password;
-        fetch(url, {
-          method:'GET',
-          headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
-          }
-        }).then((res)=>res.json())
-          .then(() =>{
-            history.push('/admin/dashboard')
-          })
-      }else{
-        setError(true);
-        setHelperText('Incorrect username or password');
-      }
-    };  
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
 
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              error={error}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              onChange={(e)=>setEmail(e.target.value)}
-              autoFocus
-            />
-            <TextField
-              error={error}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              helperText={helperText}
-              onChange={(e)=>setPassword(e.target.value)}
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={isButtonDisabled}
-              onClick={()=>handleLogin()}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/admin" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-        <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://www.synechron.com">
-          Synechron
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-        </Box>
-      </Container>
-    );
-  }
-  
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import React from "react";
+import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import Login from './views/authentication'
+import Assessment from './views/Assessment'
+import CandidateRegisterForAssessment from './views/CandidateRegisterForAssessment'
+// core components
+import Admin from "layouts/Admin.js";
+import RTL from "layouts/RTL.js";
+
+import "assets/css/material-dashboard-react.css?v=1.8.0";
+
+const hist = createBrowserHistory();
+
+ReactDOM.render(
+  <Router history={hist}>
+    <Switch>
+      <Route path="/assessment" component={Assessment}/>
+      <Route path="/admin" component={Admin} />
+      <Route path="/CandidateRegisterForAssessment" component={CandidateRegisterForAssessment}/>
+      {/* <Route path="/rtl" component={RTL} /> */}
+      {/* <Redirect from="/" to="/admin/dashboard" /> */}
+      <Route path="/" component={Login}/>
+    </Switch>
+  </Router>,
+  document.getElementById("root")
+);
