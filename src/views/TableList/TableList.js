@@ -71,12 +71,12 @@ export default function TableList() {
   const prepareData = (res)=>{
     let candidates = res.candidates;
     candidates.forEach(function (candidate, index) {
-      const {emailAddress, mobileNo, inviteDate, attemptedDate, status, name, percentage} = candidate;
+      const {emailAddress, mobileNo, inviteDate, attemptedDate, status, assessmentName, percentage} = candidate;
       const fullName = `${candidate.firstName} ${candidate.lastName}`;
         if(status === true){
-          AttemptedtableData.push([fullName, emailAddress, mobileNo, name, percentage, inviteDate, attemptedDate]);
+          AttemptedtableData.push([fullName, emailAddress, mobileNo, assessmentName, percentage, inviteDate, attemptedDate]);
         } else {
-          unAttemptedtableData.push([fullName, emailAddress, mobileNo, name, inviteDate]);
+          unAttemptedtableData.push([fullName, emailAddress, mobileNo, assessmentName, inviteDate]);
         }
        
     });
