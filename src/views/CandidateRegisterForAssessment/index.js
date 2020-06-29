@@ -98,47 +98,49 @@ function ShowInstructions(props) {
   );
 }
 
-function RegisterForAssessment() {
+function RegisterForAssessment(props) {
 
   //AD
+  //console.log(props.myemail, props.assesId, props.assesName);
   
-  let urlLoc = window.location.href;
+ /*  let urlLoc = window.location.href;
   var query = window.location.search.substring(1);
-  var vars = query.split("&")[0].split("=");
-  //console.log("URL Location ",urlLoc);
+  var vars = query.split("&")[0].split("="); */
 
-  let emailId = vars[1];
-  console.log("Email",emailId);
+  let emailId = props.myemail;
+  let assesId = props.assesId;
+  let assesName = props.assesName;
+  //let assesLabel = "Assesment Name: " + assesName;
+  console.log(emailId, assesId, assesName);
 
   const classes = useStyles();
   const [email, setEmail] = useState(emailId);
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
-  const [countryCode, setcountryCode] = useState('');
+  const [countryCode, setAssesmentName] = useState(assesName);
   const [dob, setdob] = useState('');
   const [mobile, setMobile] = useState('');
 
-  
-  const handleRegisterCandidate = () => {
 
+ /*  const handleRegisterCandidate = event => {
+    event.preventDefault();
+    window.location.href = 'http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
+  }; */
+  
+  const handleRegisterCandidate = event => {
+    event.preventDefault();
    let reqObj = {
       firstName,
       //"emailAddress": email,
       "emailAddress": emailId,
       lastName,
-      countryCode,
+      countryCode:assesName,
       "dateOfBirth": dob,
       "mobileNo": mobile
     }
 
     console.log("request Object", reqObj);
     
-
-    //AD - redirecting to, will move to success event 
-    //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+reqObj.emailAddress+'&assessmentId=1'
-    //console.log(endPoint.serviceEndPoint);
-
-    //http://3.15.175.168:8080/registerCandidate
 
     fetch(endPoint.serviceEndPoint+"/registerCandidate", {
       method: 'POST',
@@ -152,7 +154,10 @@ function RegisterForAssessment() {
       .then((res) => {
 
         console.log("Sucessful invitation ", res)
-        window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+reqObj.emailAddress+'&assessmentId=1'
+        //console.log('http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName)
+        
+        window.location.href = 'http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
+        //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId
 
       })
 
@@ -179,6 +184,7 @@ function RegisterForAssessment() {
 
   return (
     <div style={{ margin: "0 20px" }}>
+      <form onSubmit={handleRegisterCandidate}> 
       <GridContainer >
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -197,7 +203,7 @@ function RegisterForAssessment() {
                       fullWidth: true
                     }}
 
-                    inputProps={{ onChange: (e) => setfirstName(e.target.value) }}
+                    inputProps={{ onChange: (e) => setfirstName(e.target.value),required:true}}
 
                   />
                 </GridItem>
@@ -208,24 +214,38 @@ function RegisterForAssessment() {
                     formControlProps={{
                       fullWidth: true
                     }}
-                    inputProps={{ onChange: (e) => setlastName(e.target.value) }}
+                    inputProps={{ onChange: (e) => setlastName(e.target.value),required:true}}
                   />
                 </GridItem>
+
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText={emailId}
+                    labelText="Assesment Name"
+                    id="country-code"
+                    formControlProps={{
+                      fullWidth: true,
+                      disabled:true
+                    }}
+                    inputProps={
+                      { onChange: (e) => setAssesmentName(assesName),value:assesName}
+                    }
+                  />
+                </GridItem>
+              </GridContainer>
+
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={4}>
+                  <CustomInput
+                    labelText="Email"
                     id="email-address"
                     formControlProps={{
                       fullWidth: false,
                       disabled:true,
-                      
                     }}
-                    //inputProps={{ onChange: (e) => setEmail(e.target.value) }}
-                    inputProps={{ onChange: (e) => setEmail(emailId) }}
+                    inputProps={{ onChange: (e) => setEmail(emailId),value:emailId}}
                   />
                 </GridItem>
-              </GridContainer>
-              <GridContainer>
+
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
                     labelText="Mobile Number"
@@ -234,19 +254,12 @@ function RegisterForAssessment() {
                     formControlProps={{
                       fullWidth: true
                     }}
-                    inputProps={{ onChange: (e) => setMobile(e.target.value) }}
+                    inputProps={
+                      { onChange: (e) => setMobile(e.target.value),type:"number",required:true}
+                    }
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Country Code"
-                    id="country-code"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{ onChange: (e) => setcountryCode(e.target.value) }}
-                  />
-                </GridItem>
+
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
                     labelText="Date Of Birth : mm/dd/yyyy"
@@ -254,20 +267,28 @@ function RegisterForAssessment() {
                     formControlProps={{
                       fullWidth: true
                     }}
-                    inputProps={{ onChange: (e) => setdob(e.target.value) }}
+                    inputProps={{ onChange: (e) => setdob(e.target.value),required:true}}
                   />
                 </GridItem>
               </GridContainer>
 
             </CardBody>
+
             <CardFooter>
-              <Button color="primary"
+             {/*  <Button color="primary"
                 onClick={handleRegisterCandidate}
-              >Register Candidate</Button>
+              >Register Candidate
+              </Button> */}
+
+              <Button color="primary" type="submit">Register Candidate</Button>
+
+              
             </CardFooter>
+
           </Card>
         </GridItem>
       </GridContainer>
+      </form>
     </div>
   );
 }
@@ -275,7 +296,7 @@ function RegisterForAssessment() {
 class CandidateRegisterForAssessment extends Component {
  
  
-  emailfromUrl = ''; //AD
+  //emailfromUrl = ''; //AD
 
   constructor(props) {
     super(props);
@@ -299,12 +320,16 @@ class CandidateRegisterForAssessment extends Component {
     } else {
       console.log("in else");
 
-      //AD: 
-      //this.emailfromUrl = new URLSearchParams(this.props.location.search).get("emailId");
-      //console.log(this.emailfromUrl);
+     //AD: 
+     const emailfromUrl = new URLSearchParams(this.props.location.search).get("emailId");
+     const idfromUrl = new URLSearchParams(this.props.location.search).get("assessmentId");
+     const assesmentFromUrl = new URLSearchParams(this.props.location.search).get("assessmentName");
+     
+
+     console.log(emailfromUrl,idfromUrl,assesmentFromUrl);
            
       return (
-        <RegisterForAssessment/>
+        <RegisterForAssessment myemail={emailfromUrl} assesId={idfromUrl} assesName={assesmentFromUrl}/>
       );
     }
   }
