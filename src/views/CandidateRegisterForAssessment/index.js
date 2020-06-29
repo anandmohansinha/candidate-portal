@@ -121,11 +121,26 @@ function RegisterForAssessment(props) {
   const [dob, setdob] = useState('');
   const [mobile, setMobile] = useState('');
 
+  //mobile = "+"+mobile;
+
+
+
+  
+
 
  /*  const handleRegisterCandidate = event => {
     event.preventDefault();
     window.location.href = 'http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
   }; */
+
+
+  function phoneNumValidator(str) {
+    //var a = /^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/.test(str);
+    var isValid = /\+[0-9]{7,12}$/.test(str);
+    return isValid;
+    
+  }
+  
   
   const handleRegisterCandidate = event => {
     event.preventDefault();
@@ -140,26 +155,36 @@ function RegisterForAssessment(props) {
     }
 
     console.log("request Object", reqObj);
+
+    let isPhoneValid = phoneNumValidator(mobile);
+
+    if(isPhoneValid){
+      fetch(endPoint.serviceEndPoint+"/registerCandidate", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
+        },
+        body: JSON.stringify(reqObj)
+      }).then((res) => res.json())
+        .then((res) => {
+  
+          console.log("Sucessful invitation ", res)
+          //console.log('http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName)
+          
+          window.location.href = 'http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
+          //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId
+  
+        })
+    }else{
+      alert("This is invalid phone number. \nPlease enter a valid phone number, start with + symbol, country code then phone number digits must be 7-12 in range");
+
+    }
+
     
 
-    fetch(endPoint.serviceEndPoint+"/registerCandidate", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
-      },
-      body: JSON.stringify(reqObj)
-    }).then((res) => res.json())
-      .then((res) => {
-
-        console.log("Sucessful invitation ", res)
-        //console.log('http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName)
-        
-        window.location.href = 'http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
-        //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId
-
-      })
+    
 
 
     // if(email==='anand@gmail.com' && password==='password'){
@@ -239,7 +264,7 @@ function RegisterForAssessment(props) {
                     labelText="Email"
                     id="email-address"
                     formControlProps={{
-                      fullWidth: false,
+                      fullWidth: true,
                       disabled:true,
                     }}
                     inputProps={{ onChange: (e) => setEmail(emailId),value:emailId}}
@@ -255,7 +280,8 @@ function RegisterForAssessment(props) {
                       fullWidth: true
                     }}
                     inputProps={
-                      { onChange: (e) => setMobile(e.target.value),type:"number",required:true}
+                      //{ onChange: (e) => setMobile(e.target.value),type:"number",required:true}
+                      { onChange: (e) => setMobile(e.target.value),value:mobile,required:true}
                     }
                   />
                 </GridItem>
@@ -326,7 +352,7 @@ class CandidateRegisterForAssessment extends Component {
      const assesmentFromUrl = new URLSearchParams(this.props.location.search).get("assessmentName");
      
 
-     console.log(emailfromUrl,idfromUrl,assesmentFromUrl);
+     //console.log(emailfromUrl,idfromUrl,assesmentFromUrl);
            
       return (
         <RegisterForAssessment myemail={emailfromUrl} assesId={idfromUrl} assesName={assesmentFromUrl}/>
