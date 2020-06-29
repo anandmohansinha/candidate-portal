@@ -14,68 +14,71 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import endPoint from '../../variables/app.url'
-  const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.primary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
-  
-  function validateUserDetails(){
-    alert(1)
-  }
-  export default function Login() {
-   
-    const classes = useStyles();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('null');
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [error, setError] = useState(false);
-    const [helperText, setHelperText] = useState('');
-    let history = useHistory();
-    useEffect(()=>{
-      if(email.trim() && password.trim()){
-        setIsButtonDisabled(false);
-      }else{
-        setIsButtonDisabled(true);
-      }
-    }, [email,password ]);
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
-    const handleLogin = ()=>{
-      if(email==='anand@gmail.com' && password==='password'){
-        setError(false);
-        const url = `${endPoint.serviceEndPoint}valdiateLogin?loginId=`+email+`&password=`+password;
-        fetch(url, {
-          method:'GET',
-          headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
-          }
-        }).then((res)=>res.json())
+function validateUserDetails(){
+  alert(1)
+}
+export default function Login() {
+
+  const classes = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
+  let history = useHistory();
+  useEffect(()=>{
+    if(email.trim() && password.trim()){
+      setIsButtonDisabled(false);
+    }else{
+      setIsButtonDisabled(true);
+    }
+  }, [email,password ]);
+
+  const handleLogin = ()=>{
+
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)&&(/^[A-Za-z]\w{7,14}$/).test(password))
+    {
+
+      setError(false);
+      const url = `${endPoint.serviceEndPoint}valdiateLogin?loginId=`+email+`&password=`+password;
+      fetch(url, {
+        method:'GET',
+        headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+          'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
+        }
+      }).then((res)=>res.json())
           .then(() =>{
-            history.push('/admin/invite-candidate')
+            history.push('/admin/dashboard')
           })
-      }else{
-        setError(true);
-        setHelperText('Incorrect username or password');
-      }
-    };  
+    }else{
+      setError(true);
+      setHelperText('Incorrect username or password');
+    }
+  };
 
-    return (
+  return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -87,44 +90,44 @@ import endPoint from '../../variables/app.url'
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
-              error={error}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              onChange={(e)=>setEmail(e.target.value)}
-              autoFocus
+                error={error}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={(e)=>setEmail(e.target.value)}
+                autoFocus
             />
             <TextField
-              error={error}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              helperText={helperText}
-              onChange={(e)=>setPassword(e.target.value)}
-              autoComplete="current-password"
+                error={error}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                helperText={helperText}
+                onChange={(e)=>setPassword(e.target.value)}
+                autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
             />
             <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={isButtonDisabled}
-              onClick={()=>handleLogin()}
+                type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={isButtonDisabled}
+                onClick={()=>handleLogin()}
             >
               Sign In
             </Button>
@@ -143,16 +146,15 @@ import endPoint from '../../variables/app.url'
           </form>
         </div>
         <Box mt={8}>
-        <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://www.synechron.com">
-          Synechron
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
+          <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://www.synechron.com">
+              Synechron
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+          </Typography>
         </Box>
       </Container>
-    );
-  }
-  
+  );
+}
