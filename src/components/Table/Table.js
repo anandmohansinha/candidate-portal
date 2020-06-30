@@ -55,19 +55,21 @@ export default function CustomTable(props) {
             : tableData
           ).map((prop, key) => {
             const style = {};
+            let index;
             if(attemptedTable){
               style.backgroundColor = prop.indexOf("Fail") > -1 ? "#f58d8d" : "#7fd47f"  // set the color according to result field
-              const index = prop.indexOf("Fail") > -1 ? prop.indexOf("Fail") : prop.indexOf("Pass");
-              prop.splice(index,1); // remove the result field to avoid rendering it as a column in table
+              index = prop.indexOf("Fail") > -1 ? prop.indexOf("Fail") : prop.indexOf("Pass");
             }
               return (
                 <TableRow key={key} className={classes.tableBodyRow} style={style}>
                     {prop.map((prop, key) => {
-                      return (
-                        <TableCell className={classes.tableCell} key={key}>
-                          {prop}
-                        </TableCell>
-                      );
+                      if(key !== index){
+                        return (
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop}
+                          </TableCell>
+                        );
+                      }
                     })}
                   </TableRow>
               )
