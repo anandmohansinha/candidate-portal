@@ -22,6 +22,10 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from './views/authentication'
 import Assessment from './views/Assessment'
 import CandidateRegisterForAssessment from './views/CandidateRegisterForAssessment'
+
+import QuestionManagement from './views/QuestionManagement'
+import InviteCandidate from './views/CandidateInvite'
+
 // core components
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
@@ -36,6 +40,11 @@ ReactDOM.render(
       <Route path="/assessment" component={Assessment}/>
       <Route path="/admin" component={Admin} />
       <Route path="/CandidateRegisterForAssessment" component={CandidateRegisterForAssessment}/>
+
+      {/* <Route path="/invite-candidate" component={InviteCandidate}/> */}
+
+      <Route path="/question-management" component={QuestionManagement}/>
+
       {/* <Route path="/rtl" component={RTL} /> */}
       {/* <Redirect from="/" to="/admin/dashboard" /> */}
       <Route path="/" component={Login}/>

@@ -159,7 +159,7 @@ function RegisterForAssessment(props) {
     let isPhoneValid = phoneNumValidator(mobile);
 
     if(isPhoneValid){
-      fetch(endPoint.serviceEndPoint+"/registerCandidate", {
+      fetch(endPoint.serviceEndPoint+"registerCandidate", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -173,7 +173,11 @@ function RegisterForAssessment(props) {
           console.log("Sucessful invitation ", res)
           //console.log('http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName)
           
-          window.location.href = 'http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
+          window.location.href = 'http://3.16.109.39:3000/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
+
+          //window.location.href = 'http://localhost:3000/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
+
+          
           //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId
   
         })
