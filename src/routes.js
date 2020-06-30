@@ -55,14 +55,14 @@ const dashboardRoutes = [
     component: InviteCandidate,
     layout: "/admin"
   },
-  {
+ /*  {
     path: "/question-management",
     name: "Manage Questions",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Dashboard,
     component: QuestionManagement,
     layout: "/admin"
-  },
+  }, */
   {
     path: "/table",
     name: "View Status",
