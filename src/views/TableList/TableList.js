@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -7,6 +7,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from '@material-ui/core/Button';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import endPoint from "../../variables/app.url";
 
 const styles = {
@@ -41,53 +42,80 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 export default function TableList() {
- 
+
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
   const url = `${endPoint.serviceEndPoint}candidateDetails`;
 
   const [AttemptedtableData, setAttemptedtableData] = useState([]);
   const [unAttemptedtableData, setUnAttemptedtableData] = useState([]);
-  
+
   useEffect(() => {
     doRequest()
   }, []);
-  
-  const doRequest = ()=>{
-     fetch(url, {
-      method:'GET',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json',
+
+  const doRequest = () => {
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
       }
-    }).then((res)=>res.json())
-      .then((res) =>{
+    }).then((res) => res.json())
+      .then((res) => {
         prepareData(res);
         setIsLoading(false);
       })
   }
-    
-  const prepareData = (res)=>{
+
+  const prepareData = (res) => {
     let candidates = res.candidates;
     candidates.forEach(function (candidate, index) {
-      const {emailAddress, mobileNo, inviteDate, attemptedDate, status, assessmentName, percentage} = candidate;
+      const { emailAddress, mobileNo, inviteDate, attemptedDate, status, assessmentName, percentage, result } = candidate;
       const fullName = `${candidate.firstName} ${candidate.lastName}`;
-        if(status === true){
-          AttemptedtableData.push([fullName, emailAddress, mobileNo, assessmentName, percentage, inviteDate, attemptedDate]);
-        } else {
-          unAttemptedtableData.push([fullName, emailAddress, mobileNo, assessmentName, inviteDate]);
-        }
-       
+      if (status === true) {
+        AttemptedtableData.push([fullName, emailAddress, mobileNo, assessmentName, percentage, inviteDate, attemptedDate, result]);
+      } else {
+        unAttemptedtableData.push([fullName, emailAddress, mobileNo, assessmentName, inviteDate]);
+      }
+
     });
   }
- 
-  if(AttemptedtableData.length === 0 && unAttemptedtableData ===0){
+
+  if (AttemptedtableData.length === 0 && unAttemptedtableData === 0) {
     return null;
   }
-  
+
+  const downloadExcel = () => {
+    const url = `${endPoint.serviceEndPoint}download/candidateDetails`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
+      }
+    }).then(response => response.blob())
+      .then(blob => {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "candidates.xlsx";
+        document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+        a.click();
+        a.remove();  //afterwards we remove the element again         
+      });
+  }
+
   return (
- <GridContainer>
+    <GridContainer>
+      <GridItem xs={12} sm={12} md={12} style={{ textAlign: "right" }}>
+        <Button variant="contained" color="primary" onClick={downloadExcel}>
+          Download
+          <GetAppIcon />
+        </Button>
+      </GridItem>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
@@ -97,11 +125,12 @@ export default function TableList() {
             </p> */}
           </CardHeader>
           <CardBody>
-          
+
             <Table
               tableHeaderColor="primary"
-              tableHead={["Name", "Email", "Mobile", "Domain" ,"Percentage" ,"Invite Date", "Attempted Date"]}
+              tableHead={["Name", "Email", "Mobile", "Domain", "Percentage", "Invite Date", "Attempted Date"]}
               tableData={AttemptedtableData}
+              attemptedTable={true}
             />
           </CardBody>
         </Card>
@@ -126,9 +155,9 @@ export default function TableList() {
         </Card>
       </GridItem>
     </GridContainer>
-   
- );
+
+  );
 }
 
-  
+
 
