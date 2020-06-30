@@ -32,13 +32,21 @@ export default function QuestionManagement(props) {
 
     const [isSubmitClicked, setIsSubmitClicked] = React.useState(false);
 
+    const [queId, setQuesId] = React.useState(0);
+
 
 
     const next = (event) => {
+        
+
         if (questions.length > 0 && questions.length == count + 1) {
             setNextDisable(true);
         }
         setCount(count + 1);
+
+        setQuesId(questions[count].id);
+        console.log(queId);
+
         setPrevDisable(false);
         setSelectedIndex(selectedIndex + 1);
         if (answers && answers.questionAnswerReq[selectedIndex + 1] && answers.questionAnswerReq[selectedIndex + 1].optionId) {
@@ -46,10 +54,15 @@ export default function QuestionManagement(props) {
         }
     };
     const prev = (event) => {
+        
         if (questions.length > 0 && count == 2) {
             setPrevDisable(true);
         }
         setCount(count - 1)
+
+        setQuesId(questions[count].id);
+        console.log(queId);
+
         setNextDisable(false);
         setSelectedIndex(selectedIndex - 1);
         setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
@@ -76,13 +89,15 @@ export default function QuestionManagement(props) {
 
     }
     const handleChange = (event) => {
-        console.log("Handle Change");
+        
         setValue(event.target.value);
         let { questionAnswerReq } = answers;
         let quesAns = {
-            "questionId": count,
+            "questionId": queId,
             "optionId": event.target.value
         }
+        console.log("Handle Change",quesAns);
+
         questionAnswerReq.push(quesAns);
         for (const key in questionAnswerReq) {
             if (questionAnswerReq.hasOwnProperty(key)) {
@@ -113,6 +128,8 @@ const callApi=()=>{
                     setTechnology(res.assessments.technology);
                     setEmail(res.candidate.emailAddress);
                     setAnswer({ "assessmentId": res.assessments.id, "questionAnswerReq": [] });
+
+                    setQuesId(res.assessments.questions[0].id);
                 }
                 setisDataLoaded(true)
             })
