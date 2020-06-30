@@ -30,11 +30,23 @@ export default function QuestionManagement(props) {
     const [isDataLoaded, setisDataLoaded] = React.useState(false);
     const [isTestSubmitted, setIsTestSubmitted] = React.useState(false);
 
+    const [isSubmitClicked, setIsSubmitClicked] = React.useState(false);
+
+    const [queId, setQuesId] = React.useState(0);
+
+
+
     const next = (event) => {
+        
+
         if (questions.length > 0 && questions.length == count + 1) {
             setNextDisable(true);
         }
         setCount(count + 1);
+
+        setQuesId(questions[count].id);
+        console.log(queId);
+
         setPrevDisable(false);
         setSelectedIndex(selectedIndex + 1);
         if (answers && answers.questionAnswerReq[selectedIndex + 1] && answers.questionAnswerReq[selectedIndex + 1].optionId) {
@@ -42,15 +54,22 @@ export default function QuestionManagement(props) {
         }
     };
     const prev = (event) => {
+        
         if (questions.length > 0 && count == 2) {
             setPrevDisable(true);
         }
         setCount(count - 1)
+
+        setQuesId(questions[count].id);
+        console.log(queId);
+
         setNextDisable(false);
         setSelectedIndex(selectedIndex - 1);
         setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
     };
     const submit = ()=>{
+        setIsSubmitClicked(true);
+
         fetch(`${endPoint.serviceEndPoint}submitAssessment?emailId=`+email, {
         method:'POST',
         headers:{
@@ -70,12 +89,15 @@ export default function QuestionManagement(props) {
 
     }
     const handleChange = (event) => {
+        
         setValue(event.target.value);
         let { questionAnswerReq } = answers;
         let quesAns = {
-            "questionId": count,
+            "questionId": queId,
             "optionId": event.target.value
         }
+        console.log("Handle Change",quesAns);
+
         questionAnswerReq.push(quesAns);
         for (const key in questionAnswerReq) {
             if (questionAnswerReq.hasOwnProperty(key)) {
@@ -106,6 +128,8 @@ const callApi=()=>{
                     setTechnology(res.assessments.technology);
                     setEmail(res.candidate.emailAddress);
                     setAnswer({ "assessmentId": res.assessments.id, "questionAnswerReq": [] });
+
+                    setQuesId(res.assessments.questions[0].id);
                 }
                 setisDataLoaded(true)
             })
@@ -128,6 +152,7 @@ const callApi=()=>{
             {!isTestSubmitted && isDataLoaded && !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
             {isTestSubmitted && <label>Your test has been submitted sucsessfully.We wish you good luck.If you are shortlisted our recruiter team will get in touch with you.Thanks.</label>}
             {!isTestSubmitted && questions.length > 0 && <GridContainer>
+            {/* {questions.length > 0 && <GridContainer> */}
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
@@ -185,6 +210,8 @@ const callApi=()=>{
                             variant="contained"
                             color="secondary"
                             size="large"
+                            id = "btn-submit"
+                            disabled={isSubmitClicked}
                             onClick={() => submit()}
                         >
                             submit
