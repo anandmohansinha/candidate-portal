@@ -82,17 +82,13 @@ export default function InviteCandidate() {
          setValue('');
         })
 
-      fetch(assessmentsURL, {
-          method:'GET',
-          headers:{
-              'Accept':'application/json',
-              'Content-Type':'application/json',
-              'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
-          },
-          body: JSON.stringify(data)
-      }).then((res)=>res.json())
-          .then(() =>{
-          })
+    // if(email==='anand@gmail.com' && password==='password'){
+    //       setError(false);
+    //       debugger  }
+    // else{
+    //   setError(true);
+    //   setHelperText('Incorrect username or password');
+    // }
   };
   return (
     <Container component="main" maxWidth="xs">
