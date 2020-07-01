@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InviteCandidate() {
   const url = `${endPoint.serviceEndPoint}registerCandidateScheduleAssessment`;
+  const assessmentsURL = `${endPoint.serviceEndPoint}assessments`;
   const classes = useStyles();
   const[email, setEmail] = React.useState('');
   const[name, setName] = React.useState('');
@@ -52,7 +53,7 @@ export default function InviteCandidate() {
   };
   const handleSendInvitation = ()=>{
     var data ={
-      
+
         "candidate" : {
          "emailAddress" : email,
          "firstName" : name
@@ -63,7 +64,7 @@ export default function InviteCandidate() {
            }
        }
    }
-       
+
       fetch(url, {
         method:'POST',
         headers:{
@@ -74,21 +75,25 @@ export default function InviteCandidate() {
         body: JSON.stringify(data)
       }).then((res)=>res.json())
         .then(() =>{
-        
+
          alert("Mail send successfully")
          setEmail('');
          setName('');
          setValue('');
         })
-        
-    // if(email==='anand@gmail.com' && password==='password'){
-    //       setError(false);
-    //       debugger  }
-    // else{
-    //   setError(true);
-    //   setHelperText('Incorrect username or password');
-    // }
-  }; 
+
+      fetch(assessmentsURL, {
+          method:'GET',
+          headers:{
+              'Accept':'application/json',
+              'Content-Type':'application/json',
+              'Access-Control-Allow-Origin': 'Origin, X-Requested-With, Content-Type, Accept'
+          },
+          body: JSON.stringify(data)
+      }).then((res)=>res.json())
+          .then(() =>{
+          })
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -125,6 +130,7 @@ export default function InviteCandidate() {
         <FormControlLabel value="01" control={<Radio />} label="Java" />
         <FormControlLabel value="02" control={<Radio />} label="Angular" />
         <FormControlLabel value="03" control={<Radio />} label="React" />
+        <FormControlLabel value="04" control={<Radio />} label="Spring Boot" />
       </RadioGroup>
     </FormControl>
           <Button
