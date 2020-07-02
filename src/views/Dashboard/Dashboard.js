@@ -120,6 +120,23 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="info" stats icon>
+              <CardIcon color="info">
+                <Accessibility />
+              </CardIcon>
+              <p className={classes.cardCategory}>{subjectCount[5].assessmentName}</p>
+              <h3 className={classes.cardTitle}> {subjectCount[5].candidateCount}</h3>
+            </CardHeader>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <Update />
+                SpringBoot candidate
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
        </GridContainer>
     </div>
   );

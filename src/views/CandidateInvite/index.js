@@ -127,6 +127,7 @@ export default function InviteCandidate() {
         <FormControlLabel value="02" control={<Radio />} label="Angular" />
         <FormControlLabel value="03" control={<Radio />} label="React" />
         <FormControlLabel value="04" control={<Radio />} label="Spring Boot" />
+        <FormControlLabel value="1302" control={<Radio />} label="IBM-BPM" />
       </RadioGroup>
     </FormControl>
           <Button
