@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component, useEffect, useRef } from 'react'
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -29,7 +29,7 @@ export default function QuestionManagement(props) {
     const [email, setEmail] = React.useState();
     const [isDataLoaded, setisDataLoaded] = React.useState(false);
     const [isTestSubmitted, setIsTestSubmitted] = React.useState(false);
-
+    let submitButton = useRef(null);
     const [isSubmitClicked, setIsSubmitClicked] = React.useState(false);
 
     const [queId, setQuesId] = React.useState(0);
@@ -130,9 +130,19 @@ const callApi=()=>{
                     setAnswer({ "assessmentId": res.assessments.id, "questionAnswerReq": [] });
 
                     setQuesId(res.assessments.questions[0].id);
+                    setAssessmentTimer(res.assessments.duration);
                 }
-                setisDataLoaded(true)
+                setisDataLoaded(true);
             })
+    }
+
+    const setAssessmentTimer = (timeInMinutes) => {
+        const time = timeInMinutes * 60 * 1000;
+        //const time = 10000;
+        setTimeout(() => {
+            console.log(submitButton);
+            submitButton.current.click();
+        }, time);
     }
 
     const radioButtonContent = () => {
@@ -150,7 +160,7 @@ const callApi=()=>{
     return (
         <div>
             {!isTestSubmitted && isDataLoaded && !questions.length && <label>There is not any active assignment assigned to you.Please contact recruiter.</label>}
-            {isTestSubmitted && <label>Your test has been submitted sucsessfully.We wish you good luck.If you are shortlisted our recruiter team will get in touch with you.Thanks.</label>}
+            {isTestSubmitted && <label>Your test has been submitted successfully.We wish you good luck.If you are shortlisted our recruiter team will get in touch with you.Thanks.</label>}
             {!isTestSubmitted && questions.length > 0 && <GridContainer>
             {/* {questions.length > 0 && <GridContainer> */}
                 <GridItem xs={12} sm={12} md={12}>
@@ -212,6 +222,7 @@ const callApi=()=>{
                             size="large"
                             id = "btn-submit"
                             disabled={isSubmitClicked}
+                            ref={submitButton}
                             onClick={() => submit()}
                         >
                             submit
