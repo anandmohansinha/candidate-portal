@@ -63,7 +63,7 @@ export default function Dashboard() {
                   <Warning />
                 </Danger>
                 <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Java Candidate
+                  {subjectCount[2].assessmentName} Candidate
                 </a>
               </div>
             </CardFooter>
@@ -81,7 +81,7 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <DateRange />
-               Angular candidate
+                {subjectCount[1].assessmentName} candidate
               </div>
             </CardFooter>
           </Card>
@@ -98,7 +98,7 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <LocalOffer />
-                React candidate
+                {subjectCount[3].assessmentName} candidate
               </div>
             </CardFooter>
           </Card>
@@ -132,7 +132,7 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <Update />
-                SpringBoot candidate
+                {subjectCount[5].assessmentName} candidate
               </div>
             </CardFooter>
           </Card>
