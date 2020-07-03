@@ -1,71 +1,86 @@
-import React,{useState} from "react";
+import React, { Component, useState } from "react";
+
 // @material-ui/core components
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+
+//import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 import endPoint from '../../variables/app.url'
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+//import InviteCandidate from './index - Copy';
 
-export default function InviteCandidate() {
-  const url = `${endPoint.serviceEndPoint}registerCandidateScheduleAssessment`;
-  const assessmentsURL = `${endPoint.serviceEndPoint}assessments`;
-  const classes = useStyles();
-  const[email, setEmail] = React.useState('');
-  const[name, setName] = React.useState('');
-  const [value, setValue] = React.useState('java');
-  const [error, setError] = useState(false);
+let domainNameUrl = `${endPoint.serviceEndPoint}assessments`;
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+let url = `${endPoint.serviceEndPoint}registerCandidateScheduleAssessment`;
+
+
+class InviteCandidate extends React.Component {
+
+  //setState({comment: 'Hello'});
+
+ 
+
+  state = {
+    domains: [],
+    selectedTeam: "",
+    validationError: "",
+    email:"",
+    name:""
+
   };
-  const handleSendInvitation = ()=>{
-    var data ={
 
+  componentDidMount() {
+    fetch(
+      domainNameUrl
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data.assessments);
+        let domainsFromApi = data.assessments.map(team => {
+          return { value: team.id, display: team.name };
+        });
+       
+        this.setState({
+          domains: [
+            {
+              value: "",
+              display:
+                "Select Domain Name"
+            }
+          ].concat(domainsFromApi)
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+
+  handleSendInvitation() {
+    //event.preventDefault();
+    var data ={
         "candidate" : {
-         "emailAddress" : email,
-         "firstName" : name
+         "emailAddress" : this.state.email,
+         "firstName" : this.state.name
        },
        "candidateAssessment" : {
            "assessment" : {
-               "id" : value
+               "id" : this.state.selectedTeam
            }
        }
    }
 
-      fetch(url, {
+   //console.log(data);
+
+   if(this.state.email === "" || this.state.name === "" || this.state.selectedTeam ===""){
+      alert("Please fill all details first");
+   }else{
+    fetch(url, {
         method:'POST',
         headers:{
           'Accept':'application/json',
@@ -75,38 +90,37 @@ export default function InviteCandidate() {
         body: JSON.stringify(data)
       }).then((res)=>res.json())
         .then(() =>{
+         alert("Mail send successfully");
 
-         alert("Mail send successfully")
-         setEmail('');
-         setName('');
-         setValue('');
-        })
+         document.getElementById("email").value = "";
+         document.getElementById("name").value = "";
+         document.getElementById("domain-id").value = "";
+         this.state.email = "";
+         this.state.name = "";
+         this.state.selectedTeam = "";
+       
+      })
+     
+   }
+       
+    
+  }; 
 
-    // if(email==='anand@gmail.com' && password==='password'){
-    //       setError(false);
-    //       debugger  }
-    // else{
-    //   setError(true);
-    //   setHelperText('Incorrect username or password');
-    // }
-  };
-  return (
-    <Container component="main" maxWidth="xs">
+  render() {
+       
+    return (
+     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <form className={classes.form} noValidate>
+      <div className={this.classes}>
+        {/* <form onSubmit={this.handleSendInvitation} className={this.classes}> */}
+        <form className={this.classes}>
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
-            autoFocus
+            label="Email Address"         
+            onChange={(e)=>{this.state.email = e.target.value}}         
           />
           <TextField
             variant="outlined"
@@ -115,33 +129,65 @@ export default function InviteCandidate() {
             fullWidth
             id="name"
             label="Full Name"
-           value={name}
             name="name"
-            onChange={(e)=>setName(e.target.value)}
+            onChange={(e)=>{this.state.name = e.target.value}}
             autoComplete="off"
           />
-   <FormControl component="fieldset">
-      <FormLabel component="legend"></FormLabel>
-      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-        <FormControlLabel value="01" control={<Radio />} label="Java" />
-        <FormControlLabel value="02" control={<Radio />} label="Angular" />
-        <FormControlLabel value="03" control={<Radio />} label="React" />
-        <FormControlLabel value="04" control={<Radio />} label="Spring Boot" />
-        <FormControlLabel value="1302" control={<Radio />} label="IBM-BPM" />
-      </RadioGroup>
-    </FormControl>
+
+
+           <div>
+              <select
+               id = "domain-id"
+                value={this.state.selectedTeam}
+                onChange={e =>
+                  this.setState({
+                    selectedTeam: e.target.value,
+                    validationError:
+                      e.target.value === ""
+                        ? "You must select domain name"
+                        : ""
+                  })
+                  
+                }
+                className="form-control"
+              >
+                {this.state.domains.map(team => (
+                  <option
+                    key={team.value}
+                    value={team.value}
+                  >
+                    {team.display}
+                  </option>
+                ))}
+              </select>
+              <div
+                style={{
+                  color: "red",
+                  marginTop: "5px"
+                }}
+              >
+                {this.state.validationError}
+               {/*  {this.state.selectedTeam} */}
+              </div>
+          </div>
+             
           <Button
             type="button"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-            onClick={()=>handleSendInvitation()}
+            className={this.classes}
+            onClick={()=>this.handleSendInvitation()}
           >
             Send Invite
               </Button>
+        {/* <Button color="primary" type="submit">Send Invite</Button> */}
         </form>
       </div>
     </Container>
-  );
+
+    );
+  }
 }
+
+export default InviteCandidate;
