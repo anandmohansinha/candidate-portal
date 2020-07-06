@@ -171,15 +171,7 @@ function RegisterForAssessment(props) {
         .then((res) => {
   
           console.log("Sucessful invitation ", res)
-          //console.log('http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName)
-          
-          window.location.href = 'http://18.223.24.198:3000/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
-
-          //window.location.href = 'http://localhost:3000/question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
-
-          
-          //window.location.href='http://3.16.109.39:3000/admin/question-management?emailId='+emailId+'&assessmentId='+assesId
-  
+          window.location.href = endPoint.uiEndPoint+'question-management?emailId='+emailId+'&assessmentId='+assesId+'&assessmentName='+assesName
         })
     }else{
       alert("This is invalid phone number. \nPlease enter a valid phone number, start with + symbol, country code then phone number digits must be 7-12 in range");
