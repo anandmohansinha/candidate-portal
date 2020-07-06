@@ -54,18 +54,43 @@ export default function QuestionManagement(props) {
         }
     };
     const prev = (event) => {
-        
-        if (questions.length > 0 && count == 2) {
-            setPrevDisable(true);
+
+        //console.log(selectedIndex, answers.questionAnswerReq[selectedIndex -1]);
+
+        if(answers.questionAnswerReq[selectedIndex - 1] !== undefined){
+           console.log("Undefined");
+            if (questions.length > 0 && count == 2) {
+                setPrevDisable(true);
+            }
+            setCount(count - 1)
+
+            setQuesId(questions[count].id);
+            //console.log(queId);
+
+            setNextDisable(false);
+            setSelectedIndex(selectedIndex - 1);
+
+            //setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
+            if (answers && answers.questionAnswerReq[selectedIndex - 1] && answers.questionAnswerReq[selectedIndex - 1].optionId) {
+                setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
+            }
+        }else{
+            if (questions.length > 0 && count == 2) {
+                setPrevDisable(true);
+            }
+            setCount(count - 1)
+
+            setQuesId(questions[count].id);
+            //console.log(queId);
+
+            setNextDisable(false);
+            setSelectedIndex(selectedIndex - 1);
+            //setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
+            if (answers && answers.questionAnswerReq[selectedIndex - 1] && answers.questionAnswerReq[selectedIndex - 1].optionId) {
+                setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
+            }
         }
-        setCount(count - 1)
-
-        setQuesId(questions[count].id);
-        console.log(queId);
-
-        setNextDisable(false);
-        setSelectedIndex(selectedIndex - 1);
-        setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
+        
     };
     const submit = ()=>{
         setIsSubmitClicked(true);
@@ -96,7 +121,7 @@ export default function QuestionManagement(props) {
             "questionId": queId,
             "optionId": event.target.value
         }
-        console.log("Handle Change",quesAns);
+        //console.log("Handle Change",quesAns);
 
         questionAnswerReq.push(quesAns);
         for (const key in questionAnswerReq) {
