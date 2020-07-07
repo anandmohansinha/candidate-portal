@@ -116,10 +116,14 @@ export default function QuestionManagement(props) {
     const handleChange = (event) => {
         
         setValue(event.target.value);
+
+        //console.log(selectedIndex,event.target.value);
+
         let { questionAnswerReq } = answers;
         let quesAns = {
             "questionId": queId,
-            "optionId": event.target.value
+            "optionId": event.target.value,
+            "selected":selectedIndex
         }
         //console.log("Handle Change",quesAns);
 
@@ -133,6 +137,8 @@ export default function QuestionManagement(props) {
                 }
             }
         }
+
+        //console.log(questionAnswerReq);
     };
 
     useEffect(() => callApi(), []);
@@ -163,11 +169,39 @@ const callApi=()=>{
 
     const setAssessmentTimer = (timeInMinutes) => {
         const time = timeInMinutes * 60 * 1000;
+
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+
+           var getReady = setInterval(quizTimer, 1000);
+
+            function quizTimer () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                    console.log("Time Up");
+                    submitButton.current.click();
+                    clearInterval(getReady);
+                }
+            };
+        }
+
+        var quizDuration = 60 * timeInMinutes,
+        display = document.querySelector('#time');
+        startTimer(quizDuration, display);
+
         //const time = 10000;
-        setTimeout(() => {
+        /* setTimeout(() => {
             console.log(submitButton);
             submitButton.current.click();
-        }, time);
+        }, time); */
     }
 
     const radioButtonContent = () => {
@@ -193,7 +227,11 @@ const callApi=()=>{
                         <CardHeader color="primary">
                             <Typography variant="h6">
                                 Technology - {technology}
+                                <span className={styles.toright}>Assessment will end in <span id="time" className={styles.quiztimer}>00:00</span> minutes!</span>
                             </Typography>
+                            
+
+                         
                             {/* <p className={classes.cardCategoryWhite}>
               Here is a subtitle for this table
             </p> */}
