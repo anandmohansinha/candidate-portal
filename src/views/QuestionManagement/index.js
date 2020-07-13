@@ -55,9 +55,22 @@ export default function QuestionManagement(props) {
     };
     const prev = (event) => {
 
-        //console.log(selectedIndex, answers.questionAnswerReq[selectedIndex -1]);
+        if (questions.length > 0 && count == 2) {
+            setPrevDisable(true);
+        }
+        setCount(count - 1)
 
-        if(answers.questionAnswerReq[selectedIndex - 1] !== undefined){
+        setQuesId(questions[count].id);
+
+        setNextDisable(false);
+        setSelectedIndex(selectedIndex - 1);
+
+        if (answers && answers.questionAnswerReq[selectedIndex - 1] && answers.questionAnswerReq[selectedIndex - 1].optionId) {
+            setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
+        }
+
+        
+        /* if(answers.questionAnswerReq[selectedIndex - 1] !== undefined){
            console.log("Undefined");
             if (questions.length > 0 && count == 2) {
                 setPrevDisable(true);
@@ -65,12 +78,10 @@ export default function QuestionManagement(props) {
             setCount(count - 1)
 
             setQuesId(questions[count].id);
-            //console.log(queId);
 
             setNextDisable(false);
             setSelectedIndex(selectedIndex - 1);
 
-            //setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
             if (answers && answers.questionAnswerReq[selectedIndex - 1] && answers.questionAnswerReq[selectedIndex - 1].optionId) {
                 setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
             }
@@ -81,15 +92,13 @@ export default function QuestionManagement(props) {
             setCount(count - 1)
 
             setQuesId(questions[count].id);
-            //console.log(queId);
 
             setNextDisable(false);
             setSelectedIndex(selectedIndex - 1);
-            //setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
             if (answers && answers.questionAnswerReq[selectedIndex - 1] && answers.questionAnswerReq[selectedIndex - 1].optionId) {
                 setValue(answers.questionAnswerReq[selectedIndex - 1].optionId);
             }
-        }
+        } */
         
     };
     const submit = ()=>{
